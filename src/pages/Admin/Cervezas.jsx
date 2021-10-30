@@ -3,28 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
 import { Tooltip } from '@mui/material';
-const cervezasBackend = [
-    {
-        tipoDeCerveza: "Pale Ale",
-        marca: "BBQ",
-        vendedor: "Juan Picon"
-    },
-    {
-        tipoDeCerveza: "Ale Belga",
-        marca: "la sultana",
-        vendedor: "Jairo Wilmer"
-    },
-    {
-        tipoDeCerveza: "Ale Alemana",
-        marca: "la sultana",
-        vendedor: "Sisley Cossio"
-    },
-    {
-        tipoDeCerveza: "Larger Extra",
-        marca: "The capital Beer",
-        vendedor: "Juan Esteban"
-    }
-];
+import { crearVenta, editarVenta, eliminarVenta, obtenerVentas } from '../../utils/api';
+
 const Cervezas = () => {
     const [textoBoton, setTextoBoton] = useState("Ingresar nueva venta");
     const [colorBoton, setColorBoton] = useState("indigo");
@@ -33,8 +13,14 @@ const Cervezas = () => {
 
     useEffect (() => {
         // OBTENER CERVAZAS DESDE EL BACKEND
-        setCervezas (cervezasBackend)
-    }, []);
+        const refrescar = async () => {
+            await obtenerVentas ((response)=>{
+                setCervezas(response.data)
+            })
+        }
+        refrescar()
+        console.log ("hola")
+    }, [mostrarVentas]);
 
     useEffect (() => {
         if (mostrarVentas) {
@@ -53,7 +39,7 @@ const Cervezas = () => {
                 {textoBoton}
             </button>
             {mostrarVentas ? (<Tabla listaCervezas = {cervezas} />) : 
-            (<IngresarVenta mostrarTabla ={setMostrarVentas} agregarVenta={setCervezas} listaCervezas={cervezas} />)}
+            (<IngresarVenta mostrarTabla ={setMostrarVentas} />)}
             <ToastContainer position="bottom-center"
                 autoClose={2000}
                 hideProgressBar={false}
@@ -66,50 +52,48 @@ const Cervezas = () => {
         </div>
     );
 };
-const IngresarVenta = ({agregarVenta, listaCervezas, mostrarTabla}) => {
+const IngresarVenta = ({mostrarTabla}) => {
     const form = useRef(null);
-/* const [tipoDeCerveza, setTipoDeCerveza] = useState("");
-    const [marca, setMarca] = useState("");
-    const [vendedor, setVendedor] = useState("");
-    */
-    /*const enviarBackEnd = () => {
-        mostrarTabla (true)
-        agregarVenta([...listaCervezas,{tipoDeCerveza:tipoDeCerveza, marca:marca, vendedor:vendedor}])
-
-    };*/
     const submitForm = (e) => {
         e.preventDefault();
-        console.log (form.current)
         const fd = new FormData (form.current);
         const nuevaVenta = {};
+        
         fd.forEach ((value , key)=> {
             nuevaVenta[key] = value;
         });
-        console.log (nuevaVenta);
-        toast.success ("Nueva venta agregada exitosamente")
-        agregarVenta ([...listaCervezas, nuevaVenta])
+        crearVenta (nuevaVenta, 
+            (response) => {
+                console.log(response.data)
+                toast.success('Venta agregada con éxito');
+                },
+            (error) => {
+                console.error(error);
+                toast.error('Error creando una venta');
+                }
+            )
         mostrarTabla (true)
     };
     return (
         <div className =" flex flex-col p-5">
             <h2 className = "p-5 font-extrabold text-4xl "> INGRESAR NUEVA VENTA </h2>
             <form ref={form} onSubmit ={submitForm} className ="flex flex-col"  >
-                <label htmlFor="Tipo de cerveza">
-                    <input name="Tipo de cerveza" 
+                <label htmlFor="tipoDeCerveza">
+                    <input name="tipoDeCerveza" 
                     type="text" placeholder = "Tipo de cerveza" className = " border-collapse border-4 w-full outline-none"required />
                 </label>
-                <label htmlFor="Marca">
-                    <input name = "Marca" 
+                <label htmlFor="marca">
+                    <input name = "marca" 
                     type="text" placeholder = "Marca" className = " border-collapse border-4 w-full outline-none" required/>
                 </label>
-                <label htmlFor="Vendedor">
-                    <input name="Vendedor"
+                <label htmlFor="vendedor">
+                    <input name="vendedor"
                     type="text" placeholder = "Vendedor" className = " border-collapse border-4 w-full outline-none" required/>
                 </label>
                 <div className=" flex justify-center items-center">
-                    <button type="submit" className = "border rounded-md p-3 bg-blue-300 text-xl font-semibold"
-                    
-                    >Agregar Venta</button>
+                    <button type="submit" className = "border rounded-md p-3 bg-blue-300 text-xl font-semibold">
+                        Agregar Venta
+                    </button>
                 </div>
             </form>
         </div>
@@ -122,16 +106,38 @@ const FilaVenta = ({cerveza}) => {
         marca: cerveza.marca,
         vendedor: cerveza.vendedor
     });
-    const actualizarVenta = () => {
+    const actualizarVenta = async ({nuevaVenta}) => {
         console.log (nuevaVenta)
-        //Enviar al backEnd
+        setEdit(!edit)
+        await editarVenta (nuevaVenta,
+            (response) => {
+                console.log(response.data);
+                toast.success('Venta modificada con éxito');
+                },
+                (error) => {
+                toast.error('Error modificando la venta');
+                console.error(error);
+                }
+            );
+        
+    };
+    const eliminar = () => {
+        console.log ("pa eliminar", cerveza._id)
+        eliminarVenta (cerveza._id, 
+            (response) => {
+                toast.success('venta eliminada con éxito');
+                },
+                (error) => {
+                console.error(error);
+                toast.error('Error eliminando la venta');
+                }
+            )
     };
     return (
         <>
         {edit ?
             (<tr>
                 <td><input type="text" 
-                
                 className ="bg-gray-50 border border-gray-600 p-2 rounded-lg" 
                 value = {nuevaVenta.tipoDeCerveza}
                 onChange = {(e)=>{setNuevaVenta({...nuevaVenta, tipoDeCerveza: e.target.value})}}/></td>
@@ -144,9 +150,12 @@ const FilaVenta = ({cerveza}) => {
                 value = {nuevaVenta.vendedor}
                 onChange = {(e)=>{setNuevaVenta({...nuevaVenta, vendedor: e.target.value})}}/></td>
                 <td className = "border-2"> 
-                    <div className="flex justify-center "> 
+                    <div className="flex justify-around "> 
                         <Tooltip title="Save">
-                        <i  onClick = {()=>{actualizarVenta()}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
+                        <i  onClick = {()=>{actualizarVenta(nuevaVenta)}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
+                        </Tooltip>
+                        <Tooltip title="Cancel">
+                            <i onClick= {()=>{setEdit(!edit)}} className="fas fa-times cursor-pointer transform hover:scale-150" />
                         </Tooltip>
                     </div>
                 </td>
@@ -157,12 +166,13 @@ const FilaVenta = ({cerveza}) => {
                 <td className = "border-2"> {cerveza.vendedor} </td>
                 <td className = "border-2"> 
                     <div className="flex justify-around "> 
-                    <Tooltip title = "Edit">
-                        <i  onClick = {()=>{setEdit(!edit)}} className="fas fa-pencil-alt cursor-pointer transform hover:scale-150  " />
-                    </Tooltip>
-                    <Tooltip title ="Delete">
-                        <i className="fas fa-trash cursor-pointer transform hover:scale-150" />
-                    </Tooltip>
+                        <Tooltip title= "Edit">
+                            <i  onClick= {()=>{setEdit(!edit)}} 
+                                className="fas fa-pencil-alt cursor-pointer transform hover:scale-150" />
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                            <i onClick= {()=>{eliminar()}} className="fas fa-trash cursor-pointer transform hover:scale-150" />
+                        </Tooltip>
                     </div>
                 </td>
             </tr>
