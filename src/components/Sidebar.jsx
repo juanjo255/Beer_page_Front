@@ -33,5 +33,4 @@ const Ruta = ({ icono, ruta, nombre }) => {
     );
 };
 
-
 export default Sidebar

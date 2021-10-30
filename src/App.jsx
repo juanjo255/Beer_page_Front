@@ -12,6 +12,7 @@ import PrivateLayout from "layouts/PrivateLayout";
 import AuthLayout from "layouts/AuthLayout";
 import Cervezas from "pages/Admin/Cervezas";
 import AdminMain from "pages/Admin/AdminMain";
+import Empleados from "pages/Admin/Empleados";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
               </AuthLayout>
             </Route>
 
-            <Route path= {["/admin/main","/admin/cervezas"]}>
+            <Route path= {["/admin/main","/admin/cervezas", "/admin/empleados"]}>
               <PrivateLayout>
                 <Switch>
                   <Route path = "/admin/cervezas">
@@ -40,6 +41,9 @@ function App() {
                   </Route>
                   <Route path ="/admin/main">
                     <AdminMain/>
+                  </Route>
+                  <Route path ="/admin/empleados">
+                    <Empleados/>
                   </Route>
                 </Switch>
               </PrivateLayout>

@@ -45,3 +45,37 @@ export const obtenerEmpleados = async (successCallback, errorCallback) => {
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
+
+export const obtenerDatosEmpleado = async (successCallback, errorCallback) => {
+    const options = {
+    method: 'GET',
+    url: 'http://localhost:5000/employees/self',
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback);
+};
+
+export const crearEmpleado = async (data, successCallback, errorCallback) => {
+    const options = {
+    method: 'POST',
+    url: 'http://localhost:5000/employees',
+    data
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback);
+};
+
+export const editarEmpleado = async (id, data, successCallback, errorCallback) => {
+    const options = {
+    method: 'PATCH',
+    url: `http://localhost:5000/employees/${id}/`,
+    data,
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback);
+};
+
+export const eliminarEmpleado = async (id, successCallback, errorCallback) => {
+    const options = {
+    method: 'DELETE',
+    url: `http://localhost:5000/employees/${id}/`,
+    };
+    await axios.request(options).then(successCallback).catch(errorCallback);
+};
