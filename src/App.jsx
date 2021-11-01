@@ -5,7 +5,6 @@ import {
   Route
 } from "react-router-dom";
 import Login from "pages/Login";
-import Register from "pages/Register";
 import Index from "pages/Index";
 import PublicLayout from "layouts/PublicLayout";
 import PrivateLayout from "layouts/PrivateLayout";
@@ -20,14 +19,11 @@ function App() {
         <Router>
           <Switch>
 
-            <Route path= {["/login", "/register"]}>
+            <Route path= {["/login"]}>
               <AuthLayout>
                 <Switch>
                   <Route path = "/login">
                     <Login/>
-                  </Route>
-                  <Route path= "/register">
-                    <Register/>
                   </Route>
                 </Switch>
               </AuthLayout>
@@ -35,17 +31,18 @@ function App() {
 
             <Route path= {["/admin/main","/admin/cervezas", "/admin/empleados"]}>
               <PrivateLayout>
-                <Switch>
-                  <Route path = "/admin/cervezas">
-                    <Cervezas/>
-                  </Route>
-                  <Route path ="/admin/main">
-                    <AdminMain/>
-                  </Route>
-                  <Route path ="/admin/empleados">
-                    <Empleados/>
-                  </Route>
-                </Switch>
+                  <Switch>
+                    <Route path = "/admin/cervezas">
+                      <Cervezas/>
+                    </Route>
+                    <Route path ="/admin/main">
+                      <AdminMain/>
+                    </Route>
+                    <Route path ="/admin/empleados">
+                      <Empleados/>
+                    </Route>
+                  </Switch>
+                
               </PrivateLayout>
             </Route>
 

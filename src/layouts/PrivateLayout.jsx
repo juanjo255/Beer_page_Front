@@ -7,7 +7,7 @@ const PrivateLayout = ({children}) => {
         <div className = "flex flex-col md:flex-row flex-nowrap w-screen h-screen" >
             <Sidebar/>
             <SidebarResponsive/>
-            <main className = "flex flex-col w-full">{children}</main>
+            <main className = "w-full">{children}</main>
         </div>
     )
 }
