@@ -13,7 +13,7 @@ export const obtenerVentas = async (successCallback, errorCallback) => {
 export const crearVenta = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'http://localhost:5000/beers',
+    url: 'https://stark-anchorage-04255.herokuapp.com/beers/',
     data
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -22,7 +22,7 @@ export const crearVenta = async (data, successCallback, errorCallback) => {
 export const editarVenta = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `http://localhost:5000/beers/${id}/`,
+    url: `https://stark-anchorage-04255.herokuapp.com/beers/${id}/`,
     data
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -31,7 +31,7 @@ export const editarVenta = async (id, data, successCallback, errorCallback) => {
 export const eliminarVenta = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `http://localhost:5000/beers/${id}/`,
+    url: `https://stark-anchorage-04255.herokuapp.com/beers/${id}/`,
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -41,7 +41,7 @@ export const eliminarVenta = async (id, successCallback, errorCallback) => {
 export const obtenerEmpleados = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/employees',
+    url: 'https://stark-anchorage-04255.herokuapp.com/employees/',
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -49,7 +49,7 @@ export const obtenerEmpleados = async (successCallback, errorCallback) => {
 export const obtenerDatosEmpleado = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/employees/self',
+    url: 'https://stark-anchorage-04255.herokuapp.com/employees/self',
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -57,7 +57,7 @@ export const obtenerDatosEmpleado = async (successCallback, errorCallback) => {
 export const crearEmpleado = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'http://localhost:5000/employees',
+    url: 'https://stark-anchorage-04255.herokuapp.com/employees/',
     data
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -66,7 +66,7 @@ export const crearEmpleado = async (data, successCallback, errorCallback) => {
 export const editarEmpleado = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `http://localhost:5000/employees/${id}/`,
+    url: `https://stark-anchorage-04255.herokuapp.com/employees/${id}/`,
     data,
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -75,7 +75,7 @@ export const editarEmpleado = async (id, data, successCallback, errorCallback) =
 export const eliminarEmpleado = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `http://localhost:5000/employees/${id}/`,
+    url: `https://stark-anchorage-04255.herokuapp.com/employees/${id}/`,
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
