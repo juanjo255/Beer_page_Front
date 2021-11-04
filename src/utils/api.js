@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-// CRUD VENTAS
+// CRUD PARA VENTAS
 
 export const obtenerVentas = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'https://stark-anchorage-04255.herokuapp.com/beers/',
+    url: 'https://stark-anchorage-04255.herokuapp.com//beers/',
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -36,7 +36,7 @@ export const eliminarVenta = async (id, successCallback, errorCallback) => {
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-// CRUD PARA USUARIOS
+// CRUD PARA EMPLEADOS
 
 export const obtenerEmpleados = async (successCallback, errorCallback) => {
     const options = {
