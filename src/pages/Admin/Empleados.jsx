@@ -19,7 +19,7 @@ const Empleados = () => {
             })
         }
         refrescar()
-        console.log ("hola")
+        console.log ("actualizar tabla")
     }, [mostrarEmpleados]);
 
     useEffect (() => {
@@ -91,7 +91,7 @@ const FilaEmpleado = ({empleado}) => {
         <>
         {edit ?
             (<tr>
-                <td><input type="text" 
+                <td> <input type="text" 
                 className ="bg-gray-50 border border-gray-600 p-2 rounded-lg" 
                 value = {nuevaEmpleado.nombre}
                 onChange = {(e)=>{setNuevaEmpleado({...nuevaEmpleado, nombre: e.target.value})}}/></td>
@@ -99,7 +99,7 @@ const FilaEmpleado = ({empleado}) => {
                 className ="bg-gray-50 border border-gray-600 p-2 rounded-lg"
                 value = {nuevaEmpleado.correo}
                 onChange = {(e)=>{setNuevaEmpleado({...nuevaEmpleado, correo: e.target.value})}}/></td>
-                <td><input type="text"  
+                <td> <input type="date"  
                 className ="bg-gray-50 border border-gray-600 p-2 rounded-lg"
                 value = {nuevaEmpleado.fecha}
                 onChange = {(e)=>{setNuevaEmpleado({...nuevaEmpleado, fecha: e.target.value})}}/></td>
@@ -183,15 +183,17 @@ const Tabla = ({listaEmpleados}) => {
 
 const IngresarEmpleado = ({mostrarTabla}) => {
     const form = useRef(null);
+
     const submitForm = (e) => {
+        console.log("evaluando", e)
         e.preventDefault();
         const fd = new FormData (form.current);
-        const nuevaEmpleado = {};
+        const nuevoEmpleado = {};
         
         fd.forEach ((value , key)=> {
-            nuevaEmpleado[key] = value;
+            nuevoEmpleado[key] = value;
         });
-        crearEmpleado (nuevaEmpleado, 
+        crearEmpleado (nuevoEmpleado, 
             (response) => {
                 console.log(response.data)
                 toast.success('Empleado agregada con éxito');
@@ -217,7 +219,7 @@ const IngresarEmpleado = ({mostrarTabla}) => {
                 </label>
                 <label htmlFor="fecha">
                     <input name="fecha"
-                    type="text" placeholder = "Fecha" className = " border-collapse border-4 w-full outline-none" required/>
+                    type="date" placeholder = "Fecha" className = " border-collapse border-4 w-full outline-none" required/>
                 </label>
                 <div className=" flex justify-center items-center">
                     <button type="submit" className = "border rounded-md p-3 bg-blue-300 text-xl font-semibold">

@@ -19,7 +19,7 @@ const Cervezas = () => {
             })
         }
         refrescar()
-        console.log ("hola")
+        console.log ("actualizar tabla")
     }, [mostrarVentas]);
 
     useEffect (() => {

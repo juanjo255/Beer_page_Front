@@ -5,7 +5,7 @@ import axios from 'axios';
 export const obtenerVentas = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'https://stark-anchorage-04255.herokuapp.com//beers/',
+    url: 'https://stark-anchorage-04255.herokuapp.com/beers/',
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
