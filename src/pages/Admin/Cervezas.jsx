@@ -33,7 +33,7 @@ const Cervezas = () => {
     }, [mostrarVentas]);
 
     return (
-        <div className = "flex flex-col h-full overflow-auto ">
+        <div className = "flex flex-col h-full overflow-auto">
             <button onClick={() => {setMostrarVentas(!mostrarVentas);}}
             className={`text-white bg-${colorBoton}-500 p-5 rounded-md w-full`}>
                 {textoBoton}
@@ -226,4 +226,4 @@ const Tabla = ({listaCervezas}) => {
     );
 };
 
-export default Cervezas
+export default Cervezas;

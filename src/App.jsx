@@ -42,7 +42,6 @@ function App() {
                       <Empleados/>
                     </Route>
                   </Switch>
-                
               </PrivateLayout>
             </Route>
 
