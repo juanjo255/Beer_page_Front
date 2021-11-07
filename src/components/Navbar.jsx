@@ -1,7 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
+
+    const { loginWithRedirect } = useAuth0();
     return (
         <nav className="bg-black">
                 <ul className="flex w-full  justify-around items-center my-3 text-white text-lg ">
@@ -9,9 +11,8 @@ const Navbar = () => {
                     <li>Nevera</li>
                     <li>FQ</li>
                     <li className="px-3">
-                        <Link to="/login">
-                        <button className= "bg-yellow-300 p-2 rounded-lg hover:bg-indigo-300 text-black">Sign in</button>
-                        </Link>
+                        <button onClick={() => loginWithRedirect()} 
+                        className= "bg-yellow-300 p-2 rounded-lg hover:bg-indigo-300 text-black">Sign in</button>
                     </li>
                 </ul>
         </nav>
