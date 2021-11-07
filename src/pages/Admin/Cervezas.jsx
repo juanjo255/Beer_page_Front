@@ -52,6 +52,7 @@ const Cervezas = () => {
         </div>
     );
 };
+
 const IngresarVenta = ({mostrarTabla}) => {
     const form = useRef(null);
     const submitForm = (e) => {
@@ -99,6 +100,7 @@ const IngresarVenta = ({mostrarTabla}) => {
         </div>
     );
 };
+
 const FilaVenta = ({cerveza}) => {
     const [edit, setEdit] = useState(false)
     const [nuevaVenta, setNuevaVenta] = useState({
@@ -122,9 +124,9 @@ const FilaVenta = ({cerveza}) => {
         
     };
     const eliminar = () => {
-        console.log ("pa eliminar", cerveza._id)
         eliminarVenta (cerveza._id, 
             (response) => {
+                console.log ("eliminado", response);
                 toast.success('venta eliminada con éxito');
                 },
                 (error) => {
@@ -179,6 +181,7 @@ const FilaVenta = ({cerveza}) => {
         )}
     </>
 )};
+
 const Tabla = ({listaCervezas}) => {
     const [busqueda, setBusqueda] = useState("")
     const [cervezasFiltradas, setCervezasFiltradas] = useState(listaCervezas);
