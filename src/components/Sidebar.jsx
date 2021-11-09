@@ -6,6 +6,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Sidebar = () => {
     const { logout } = useAuth0();
+    const cerrarSesion = () =>{
+        logout({ returnTo: window.location.origin });
+        localStorage.setItem ("token", null);
+    }
     return (
             <nav className = "hidden md:flex md:w-72 flex-col bg-gray-700 p-4 h-full border border-black"  >
                 <ImageLogo/>
@@ -14,7 +18,7 @@ const Sidebar = () => {
                     <Ruta icono='fas fa-beer' ruta='/admin/missing' nombre='Beer' />
                     <Ruta icono='fas fa-cash-register' ruta='/admin/cervezas' nombre='Sales' />
                     <Ruta icono='fas fa-users' ruta='/admin/empleados' nombre='Employees' />
-                    <button onClick={() => logout({ returnTo: window.location.origin })} className="p-1 my-60 text-white flex flex-col w-full items-center bg-red-400 rounded-md">
+                    <button onClick={() => cerrarSesion()} className="p-1 my-60 text-white flex flex-col w-full items-center bg-red-400 rounded-md">
                         Log Out
                     </button>
                 </div>
