@@ -196,8 +196,9 @@ const Tabla = ({listaCervezas}) => {
     
 
     return (
-        <div className ="flex items-start">
-            <div className ="flex flex-col h-screen justify-center items-center border-4">
+        <div className ="flex items-start ">
+
+            <div className ="flex flex-col h-full justify-center border-4 border-black">
                 <h2 className= "text-4xl font-extrabold m-4"> VENTAS REALIZADAS </h2>
                 <div className = "flex w-full">
                     <input 
@@ -208,9 +209,11 @@ const Tabla = ({listaCervezas}) => {
                     <i className = "fas fa-search"/>
                 </div>
             </div>
-            <table className = "table-auto tabla w-full" >
+
+            <div className ="w-full border-4 border-black p-5">
+            <table className = "table-auto tabla" >
                 <thead>
-                    <tr className = "border-4 border-solid">
+                    <tr className = " border-solid">
                         <th className = "border-2 text-left text-xl"> Tipo de Cerveza </th>
                         <th className = "border-2 text-left text-xl"> Marca </th>
                         <th className = "border-2 text-left text-xl"> Vendedor </th>
@@ -225,6 +228,7 @@ const Tabla = ({listaCervezas}) => {
                     })}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 };

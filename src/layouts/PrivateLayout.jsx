@@ -2,6 +2,7 @@ import Sidebar from 'components/Sidebar'
 import SidebarResponsive from 'components/SidebarResponsive'
 import React from 'react'
 import PrivateRoute from 'components/PrivateRoute'
+
 const PrivateLayout = ({children}) => {
     return (
         <PrivateRoute>
@@ -14,4 +15,4 @@ const PrivateLayout = ({children}) => {
     )
 }
 
-export default PrivateLayout
+export default PrivateLayout;
