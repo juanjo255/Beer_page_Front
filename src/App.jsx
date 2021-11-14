@@ -7,14 +7,17 @@ import {
 import Index from "pages/Index";
 import PublicLayout from "layouts/PublicLayout";
 import PrivateLayout from "layouts/PrivateLayout";
+import PrivateRoute from "components/PrivateRoute";
 import Cervezas from "pages/Admin/Cervezas";
-import AdminMain from "pages/Admin/AdminMain";
-import Empleados from "pages/Admin/Empleados";
-import Admin from "pages/Admin";
+import Usuarios from "pages/Admin/Usuarios";
+import Prueba from "pages/Prueba";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { UserContext } from "context/UserContext";
+import { useState } from "react";
 
 
 function App() {
+  const [userData, setUserData] = useState({})
   return (
     <Auth0Provider 
     domain="cervezas-proyecto.us.auth0.com"
@@ -22,26 +25,26 @@ function App() {
     redirectUri={window.location.origin}
     audience='https://api-cerverceria-autenticacion/' >
       <div>
+        <UserContext.Provider value = {{userData, setUserData}}> 
             <Router>
               <Switch>
 
-                <Route path= {["/admin/main","/admin/cervezas", "/admin/empleados"]}>
+                <Route path= {["/admin/cervezas", "/admin/usuarios"]}>
                   <PrivateLayout>
                       <Switch>
                         <Route path = "/admin/cervezas">
                           <Cervezas/>
                         </Route>
-                        <Route path ="/admin/main">
-                          <AdminMain/>
-                        </Route>
-                        <Route path ="/admin/empleados">
-                          <Empleados/>
+                        <Route path ="/admin/usuarios">
+                        <PrivateRoute roleList = {["Admin"]} >
+                          <Usuarios/>
+                        </PrivateRoute>
                         </Route>
                       </Switch>
                   </PrivateLayout>
                 </Route>
-                <Route path="/Admin">
-                      <Admin/>
+                <Route path="/prueba">
+                      <Prueba/>
                 </Route>
                 <Route path= {["/"]}>
                   <PublicLayout>
@@ -50,9 +53,10 @@ function App() {
                     </Route>
                   </PublicLayout>
                 </Route>
-
+                
               </Switch>
             </Router>
+        </UserContext.Provider>
       </div>
     </Auth0Provider>
   );

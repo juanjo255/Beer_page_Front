@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 
-const Admin = () => {
+const Prueba = () => {
     const { user, isAuthenticated } = useAuth0();
     useEffect(() => {
         console.log (user)
@@ -10,4 +10,4 @@ const Admin = () => {
     return <div>PROBANDO</div>
 }
 
-export default Admin;
+export default Prueba;

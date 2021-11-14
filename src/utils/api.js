@@ -9,7 +9,7 @@ const getToken = ()=>{
 export const obtenerVentas = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'https://stark-anchorage-04255.herokuapp.com/beers/',
+    url: 'http://localhost:5000/beers/',
     headers: { Authorization: getToken()  }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -18,7 +18,7 @@ export const obtenerVentas = async (successCallback, errorCallback) => {
 export const crearVenta = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'https://stark-anchorage-04255.herokuapp.com/beers/',
+    url: 'http://localhost:5000/beers/',
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -29,7 +29,7 @@ export const crearVenta = async (data, successCallback, errorCallback) => {
 export const editarVenta = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `https://stark-anchorage-04255.herokuapp.com/beers/${id}/`,
+    url: `http://localhost:5000/beers/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -39,56 +39,56 @@ export const editarVenta = async (id, data, successCallback, errorCallback) => {
 export const eliminarVenta = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `https://stark-anchorage-04255.herokuapp.com/beers/${id}/`,
+    url: `http://localhost:5000/beers/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-// CRUD PARA EMPLEADOS
+// CRUD PARA USUARIOS
 
-export const obtenerEmpleados = async (successCallback, errorCallback) => {
+export const obtenerUsuarios = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'https://stark-anchorage-04255.herokuapp.com/employees/',
+    url: 'http://localhost:5000/users/',
     headers: {Authorization: getToken()}
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-export const obtenerDatosEmpleado = async (successCallback, errorCallback) => {
+export const obtenerDatosUsuario = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'https://stark-anchorage-04255.herokuapp.com/employees/self',
+    url: 'http://localhost:5000/users/self',
     headers: {Authorization: getToken()}
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-export const crearEmpleado = async (data, successCallback, errorCallback) => {
+export const crearUsuarios = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'https://stark-anchorage-04255.herokuapp.com/employees/',
+    url: 'http://localhost:5000/users/',
     headers: {'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-export const editarEmpleado = async (id, data, successCallback, errorCallback) => {
+export const editarUsuario = async (id, {data}, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `https://stark-anchorage-04255.herokuapp.com/employees/${id}/`,
+    url: `http://localhost:5000/users/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken()},
     data
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-export const eliminarEmpleado = async (id, successCallback, errorCallback) => {
+export const eliminarUsuarios = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `https://stark-anchorage-04255.herokuapp.com/employees/${id}/`,
+    url: `http://localhost:5000/users/${id}/`,
     headers: {'Content-Type': 'application/json', Authorization: getToken() }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);

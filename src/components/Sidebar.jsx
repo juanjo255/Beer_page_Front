@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ImageLogo from './ImageLogo'
 import { useAuth0 } from "@auth0/auth0-react";
+import PrivateComponent from './PrivateComponent';
 
 const Sidebar = () => {
     const { user, logout } = useAuth0();
@@ -17,7 +18,9 @@ const Sidebar = () => {
                     <Ruta icono='fas fa-user' ruta='/admin/perfil' nombre='Profile' usuario = {user} />
                     <Ruta icono='fas fa-beer' ruta='/admin/missing' nombre='Beer' />
                     <Ruta icono='fas fa-cash-register' ruta='/admin/cervezas' nombre='Sales' />
-                    <Ruta icono='fas fa-users' ruta='/admin/empleados' nombre='Employees' />
+                    <PrivateComponent roleList={["Admin"]} >
+                    <Ruta icono='fas fa-users' ruta='/admin/usuarios' nombre='Users' />
+                    </PrivateComponent>
                     <button onClick={() => cerrarSesion()} className="p-1 my-60 text-white flex flex-col w-full items-center bg-red-400 rounded-md">
                         Log Out
                     </button>
