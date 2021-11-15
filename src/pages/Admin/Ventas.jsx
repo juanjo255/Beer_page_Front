@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { Tooltip } from '@mui/material';
 import { crearVenta, editarVenta, eliminarVenta, obtenerVentas } from '../../utils/api';
 
-const Cervezas = () => {
+const Ventas = () => {
     const [textoBoton, setTextoBoton] = useState("Ingresar nueva venta");
     const [colorBoton, setColorBoton] = useState("indigo");
     const [mostrarVentas, setMostrarVentas] = useState(true);
@@ -233,4 +233,4 @@ const Tabla = ({listaCervezas}) => {
     );
 };
 
-export default Cervezas;
+export default Ventas;

@@ -65,31 +65,12 @@ export const obtenerDatosUsuario = async (successCallback, errorCallback) => {
     await axios.request(options).then(successCallback).catch(errorCallback);
 };
 
-export const crearUsuarios = async (data, successCallback, errorCallback) => {
-    const options = {
-    method: 'POST',
-    url: 'http://localhost:5000/users/',
-    headers: {'Content-Type': 'application/json', Authorization: getToken() },
-    data
-    };
-    await axios.request(options).then(successCallback).catch(errorCallback);
-};
-
-export const editarUsuario = async (id, {data}, successCallback, errorCallback) => {
+export const editarUsuario = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
     url: `http://localhost:5000/users/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken()},
     data
-    };
-    await axios.request(options).then(successCallback).catch(errorCallback);
-};
-
-export const eliminarUsuarios = async (id, successCallback, errorCallback) => {
-    const options = {
-    method: 'DELETE',
-    url: `http://localhost:5000/users/${id}/`,
-    headers: {'Content-Type': 'application/json', Authorization: getToken() }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
 };

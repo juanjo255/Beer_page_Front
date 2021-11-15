@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
 
-    const { loginWithRedirect } = useAuth0();
+    const { loginWithRedirect, user, isAuthenticated } = useAuth0();
     return (
         <nav className="bg-black">
                 <ul className="flex w-full  justify-around items-center my-3 text-white text-lg ">
@@ -11,12 +11,17 @@ const Navbar = () => {
                     <li>Nevera</li>
                     <li>FQ</li>
                     <li className="px-3">
-                        <button onClick={() => loginWithRedirect()} 
-                        className= "bg-yellow-300 p-2 rounded-lg hover:bg-indigo-300 text-black">Sign in</button>
+                        {isAuthenticated ? 
+                            (<button 
+                            className= "bg-yellow-300 p-2  px-5 rounded-lg hover:bg-indigo-300 text-black">
+                                {user.given_name} </button>) : (<button onClick={() => loginWithRedirect()} 
+                            className= "bg-yellow-300 p-2  rounded-lg hover:bg-indigo-300 text-black">
+                                Sign in </button>)
+                            }
                     </li>
                 </ul>
         </nav>
     )
-}
+                        };
 
 export default Navbar

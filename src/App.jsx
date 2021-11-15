@@ -8,11 +8,11 @@ import Index from "pages/Index";
 import PublicLayout from "layouts/PublicLayout";
 import PrivateLayout from "layouts/PrivateLayout";
 import PrivateRoute from "components/PrivateRoute";
-import Cervezas from "pages/Admin/Cervezas";
+import Ventas from "pages/Admin/Ventas";
 import Usuarios from "pages/Admin/Usuarios";
 import Prueba from "pages/Prueba";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { UserContext } from "context/UserContext";
+import { userContext } from "context/userContext";
 import { useState } from "react";
 
 
@@ -25,20 +25,22 @@ function App() {
     redirectUri={window.location.origin}
     audience='https://api-cerverceria-autenticacion/' >
       <div>
-        <UserContext.Provider value = {{userData, setUserData}}> 
+        <userContext.Provider value = {{userData, setUserData}}> 
             <Router>
               <Switch>
 
-                <Route path= {["/admin/cervezas", "/admin/usuarios"]}>
+                <Route path= {["/admin/ventas", "/admin/usuarios"]}>
                   <PrivateLayout>
                       <Switch>
-                        <Route path = "/admin/cervezas">
-                          <Cervezas/>
+                        <Route path = "/admin/ventas">
+                        <PrivateRoute roleList={["Admin", "Vendedor"]} >
+                          <Ventas/>
+                        </PrivateRoute>
                         </Route>
                         <Route path ="/admin/usuarios">
-                        <PrivateRoute roleList = {["Admin"]} >
-                          <Usuarios/>
-                        </PrivateRoute>
+                          <PrivateRoute roleList="Admin" >
+                            <Usuarios/>
+                          </PrivateRoute>
                         </Route>
                       </Switch>
                   </PrivateLayout>
@@ -56,7 +58,7 @@ function App() {
                 
               </Switch>
             </Router>
-        </UserContext.Provider>
+        </userContext.Provider>
       </div>
     </Auth0Provider>
   );

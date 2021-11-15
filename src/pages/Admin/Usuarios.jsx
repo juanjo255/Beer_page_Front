@@ -2,7 +2,6 @@ import React, { useEffect, useState} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
-import { Tooltip } from '@mui/material';
 import { editarUsuario, obtenerUsuarios } from '../../utils/api';
 
 const Usuarios = () => {
@@ -32,74 +31,42 @@ const Usuarios = () => {
 };
 
 const FilaUsuarios = ({usuario}) => {
-    const [edit, setEdit] = useState(false)
-    const [nuevoUsuario, setNuevoUsuario] = useState({...usuario, _id:usuario._id});
     const [rol, setRol] = useState(usuario.rol);
-    //console.log ("nuevo", nuevoUsuario._id)
-    const actualizarUsuario = async (nuevoUsuario) => {
-        console.log ("actualizando", nuevoUsuario)
-        await editarUsuario (nuevoUsuario._id, nuevoUsuario,
-            (response) => {
-                console.log(response.data);
-                toast.success('Usuarios modificado con éxito');
-                setEdit(!edit)
-                },
-                (error) => {
-                toast.error('Error modificando el usuario');
-                console.error(error);
-                }
-            );
+
+    useEffect(() => {
+        const actualizarUsuario = async () => {
+            await editarUsuario (usuario._id, {rol:rol},
+                (response) => {
+                    console.log(response.data);
+                    toast.success('Usuarios modificado con éxito');
+                    },
+                    (error) => {
+                    toast.error('Error modificando el usuario');
+                    console.error(error);
+                    }
+                );
+            
+        };
         
-    };
+        if (usuario.rol !== rol){
+            actualizarUsuario()
+        }
+    }, [rol, usuario])
 
     return (
         <>
-        {edit ?
-            (<tr>
-
-                <td> <input type="text" 
-                className ="bg-gray-50 border border-gray-600 p-2 rounded-lg" 
-                value = {nuevoUsuario.name}
-                onChange = {(e)=>{setNuevoUsuario({...nuevoUsuario, name: e.target.value})}}/></td>
-
-                <td> <input type="text" 
-                className ="bg-gray-50 border border-gray-600 p-2 rounded-lg"
-                value = {nuevoUsuario.email}
-                onChange = {(e)=>{setNuevoUsuario ({...nuevoUsuario, email: e.target.value})}}/></td>
-
-                <td> <select name="Rol" value = {rol} onChange = {(e) => {setRol(e.target.value)}} >
-                    <option value="Pendiente">Pendiente</option>
-                    <option value ="Vendedor">Vendedor</option>
-                    <option value ="Admin">Admin</option>
-                    </select> </td> 
-
-                <td className = "border-2"> 
-                    <div className="flex justify-around "> 
-                        <Tooltip title="Save">
-                        <i  onClick = {()=>{actualizarUsuario(nuevoUsuario)}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
-                        </Tooltip>
-                        <Tooltip title="Cancel">
-                            <i onClick= {()=>{setEdit(!edit)}} className="fas fa-times cursor-pointer transform hover:scale-150" />
-                        </Tooltip>
-                    </div>
-                </td>
-
-            </tr>) : (
             <tr className ="border-collapse border-2" >
                 <td className = "border-2"> {usuario.name} </td>
                 <td className = "border-2"> {usuario.email} </td>
-                <td className = "border-2"> {rol} </td>
-                <td className = "border-2"> 
-                    <div className="flex justify-around "> 
-                        <Tooltip title= "Edit">
-                            <i  onClick= {()=>{setEdit(!edit)}} 
-                                className="fas fa-pencil-alt cursor-pointer transform hover:scale-150" />
-                        </Tooltip>
-                    </div>
-                </td>
+                <td className = "border-2"> <select name="Rol" value={rol} 
+                onChange={(e) => {setRol(e.target.value)}}>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Usuario">Usuario</option>
+                    <option value="Vendedor">Vendedor</option>
+                    <option value="Admin">Admin</option>
+                    </select></td>
             </tr>
-        )}
-    </>
+        </>
 )};
 
 const Tabla = ({listaUsuarios}) => {
@@ -134,7 +101,6 @@ const Tabla = ({listaUsuarios}) => {
                         <th className = "border-2 text-left text-xl"> Nombre </th>
                         <th className = "border-2 text-left text-xl"> Correo </th>
                         <th className = "border-2 text-left text-xl"> Rol </th>
-                        <th className = "border-2 text-left text-xl"> Acciones </th>
                     </tr>
                 </thead>
                 <tbody>

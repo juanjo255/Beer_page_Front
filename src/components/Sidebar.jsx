@@ -18,7 +18,7 @@ const Sidebar = () => {
                     <Ruta icono='fas fa-user' ruta='/admin/perfil' nombre='Profile' usuario = {user} />
                     <Ruta icono='fas fa-beer' ruta='/admin/missing' nombre='Beer' />
                     <Ruta icono='fas fa-cash-register' ruta='/admin/cervezas' nombre='Sales' />
-                    <PrivateComponent roleList={["Admin"]} >
+                    <PrivateComponent roleList="Admin" >
                     <Ruta icono='fas fa-users' ruta='/admin/usuarios' nombre='Users' />
                     </PrivateComponent>
                     <button onClick={() => cerrarSesion()} className="p-1 my-60 text-white flex flex-col w-full items-center bg-red-400 rounded-md">

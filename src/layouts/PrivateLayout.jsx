@@ -1,39 +1,47 @@
-import react, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from 'components/Sidebar'
 import SidebarResponsive from 'components/SidebarResponsive'
 import BusquedaLateral from 'components/BusquedaLateral'
 import { useAuth0 } from "@auth0/auth0-react";
 import ReactLoading from 'react-loading';
 import { obtenerDatosUsuario } from 'utils/api';
-import { useUser } from 'context/UserContext';
+import { useUser } from 'context/userContext';
 
-const PrivateLayout = ({children}) => {
+const PrivateLayout = ({ children }) => {
     const [busqueda, setBusqueda] = useState("HOLA")
     const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently } = useAuth0();
     const [loadingUserInfo, setLoadingUserInfo] = useState(false);
-    const {setUserData} = useUser();
-    
+    const {setUserData, userData} = useUser();
     useEffect (()=>{
+
         const fetchAuth0Token = async ()=> {
+            //1. pedir token
             setLoadingUserInfo (true);
             const accessToken = await getAccessTokenSilently({
                 audience:'https://api-cerverceria-autenticacion/',
                     });
+            
+            //2. recibir token de auth0
             localStorage.setItem("token", accessToken);
-            await obtenerDatosUsuario ((res) => {
-                setUserData(res.data);
-                setLoadingUserInfo(false);
-            },
-            (error) => {
-                console.log("error obteniendo datos de usuario", error)});
-                setLoadingUserInfo(false);
-            }
+
+            //3. enviar al backend
+            await obtenerDatosUsuario (
+                (res) => {
+                    res.data.rol = "Admin";
+                    setUserData(res.data);
+                    setLoadingUserInfo(false);
+
+                },
+                (error) => {
+                    console.log("error obteniendo datos del usuario", error)});
+                    setLoadingUserInfo(false);
+                }
         if (isAuthenticated){
             fetchAuth0Token();
         }
-    },[isAuthenticated, getAccessTokenSilently, setUserData, setLoadingUserInfo]);
+    },[isAuthenticated, getAccessTokenSilently, setUserData]);
     
-    if (isLoading ) {
+    if (isLoading) {
         return (
         <div className = "flex flex-col h-screen justify-center items-center bg-black">
             <ReactLoading type="bubbles" color="yellow" height={200} width={200} />  
@@ -48,7 +56,7 @@ const PrivateLayout = ({children}) => {
                 <Sidebar/>
                 <SidebarResponsive/>
                 <BusquedaLateral setBusqueda={setBusqueda}/>
-                <main className = "w-screen" busqueda={busqueda}>{children}</main>
+                <main className = "w-screen" busqueda={busqueda}>{ children }</main>
             </div>
     )
 }
