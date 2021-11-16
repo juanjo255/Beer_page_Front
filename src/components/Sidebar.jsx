@@ -18,7 +18,7 @@ const Sidebar = () => {
                     <Ruta icono='fas fa-user' ruta='/nothing' nombre='Profile' usuario = {user} />
                     
                     <PrivateComponent roleList={["Admin", "Vendedor"]} >
-                    <Ruta icono='fas fa-beer' ruta='/admin/missing' nombre='Beer' />
+                    <Ruta icono='fas fa-beer' ruta='/admin/mercancia' nombre='Ware' />
                     <Ruta icono='fas fa-cash-register' ruta='/admin/ventas' nombre='Sales' />
                     </PrivateComponent>
 

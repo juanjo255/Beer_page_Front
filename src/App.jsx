@@ -10,11 +10,13 @@ import PrivateLayout from "layouts/PrivateLayout";
 import PrivateRoute from "components/PrivateRoute";
 import Ventas from "pages/Admin/Ventas";
 import Usuarios from "pages/Admin/Usuarios";
+import Mercancia from "pages/Admin/Mercancia";
 import Prueba from "pages/Prueba";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { userContext } from "context/userContext";
 import { searchContext } from "context/searchContext";
 import { useState } from "react";
+
 
 //window.location.origin
 function App() {
@@ -32,7 +34,7 @@ function App() {
             <Router>
               <Switch>
 
-                <Route path= {["/admin/ventas", "/admin/usuarios", "/admin/prueba"]}>
+                <Route path= {["/admin/ventas", "/admin/usuarios", "/admin/mercancia" , "/admin/prueba"]}>
                   <PrivateLayout>
 
                       <Switch>
@@ -47,7 +49,13 @@ function App() {
                             <Usuarios/>
                           </PrivateRoute>
                         </Route>
-                        
+
+                        <Route path ="/admin/mercancia">
+                          <PrivateRoute roleList={["Admin", "Vendedor"]} >
+                            <Mercancia/>
+                          </PrivateRoute>
+                        </Route>
+
                         <Route path="/admin/prueba">
                           <Prueba/>
                         </Route>
