@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
 import { editarUsuario, obtenerUsuarios } from '../../utils/api';
+import { useSearch } from 'context/searchContext';
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -70,31 +71,19 @@ const FilaUsuarios = ({usuario}) => {
 )};
 
 const Tabla = ({listaUsuarios}) => {
-    const [busqueda, setBusqueda] = useState("")
+    const {search} = useSearch()
     const [usuariosFiltrados, setUsuariosFiltrados] = useState(listaUsuarios);
 
     useEffect(() => {
         setUsuariosFiltrados(
         listaUsuarios.filter((elemento) => {
-            return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+            return JSON.stringify(elemento).toLowerCase().includes(search.toLowerCase());
         })
         );
-    }, [busqueda, listaUsuarios]);
+    }, [search, listaUsuarios]);
     
-
     return (
-        <div className ="flex items-start">
-            <div className ="flex flex-col h-screen justify-center items-center border-4">
-                <h2 className= "text-4xl font-extrabold m-4"> USUARIOS  </h2>
-                <div className = "flex w-full">
-                    <input 
-                    type="search" 
-                    className="border rounded-md focus-within:border-indigo-400 outline-none w-full"
-                    placeholder = "Buscar"
-                    onChange = {(e)=> setBusqueda (e.target.value)}/>
-                    <i className = "fas fa-search"/>
-                </div>
-            </div>
+        <div className ="flex items-start" id="sacarTitle" title="USUARIOS REGISTRADOS">
             <table className = "table-auto tabla w-full" >
                 <thead>
                     <tr className = "border-4 border-solid">

@@ -3,12 +3,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
 import { Tooltip } from '@mui/material';
+import PrivateComponent from 'components/PrivateComponent';
 import { crearVenta, editarVenta, eliminarVenta, obtenerVentas } from '../../utils/api';
+import { useSearch } from 'context/searchContext';
 
 const Ventas = () => {
     const [textoBoton, setTextoBoton] = useState("Ingresar nueva venta");
     const [colorBoton, setColorBoton] = useState("indigo");
     const [mostrarVentas, setMostrarVentas] = useState(true);
+    const [refresh, setRefresh] = useState(false);
     const [cervezas, setCervezas] = useState([]);
 
     useEffect (() => {
@@ -19,8 +22,8 @@ const Ventas = () => {
             })
         }
         refrescar()
-        console.log ("actualizar tabla")
-    }, [mostrarVentas]);
+        console.log ("refrescar tabla")
+    }, [mostrarVentas, refresh] );
 
     useEffect (() => {
         if (mostrarVentas) {
@@ -33,12 +36,12 @@ const Ventas = () => {
     }, [mostrarVentas]);
 
     return (
-        <div className = "flex flex-col h-full overflow-auto">
+        <div className = "flex flex-col h-full overflow-auto" id="sacarTitle" title="VENTAS REALIZADAS">
             <button onClick={() => {setMostrarVentas(!mostrarVentas);}}
             className={`text-white bg-${colorBoton}-500 p-5 rounded-md w-full`}>
                 {textoBoton}
             </button>
-            {mostrarVentas ? (<Tabla listaCervezas = {cervezas} />) : 
+            {mostrarVentas ? (<Tabla listaCervezas = {cervezas} refrescarTabla ={setRefresh} refrescar ={refresh} />) : 
             (<IngresarVenta mostrarTabla ={setMostrarVentas} />)}
             <ToastContainer position="bottom-center"
                 autoClose={2000}
@@ -101,19 +104,19 @@ const IngresarVenta = ({mostrarTabla}) => {
     );
 };
 
-const FilaVenta = ({cerveza}) => {
+const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
     const [edit, setEdit] = useState(false)
     const [nuevaVenta, setNuevaVenta] = useState({
         tipoDeCerveza: cerveza.tipoDeCerveza,
         marca: cerveza.marca,
         vendedor: cerveza.vendedor
     });
-    const actualizarVenta = async ({nuevaVenta}) => {
-        console.log (nuevaVenta)
+    const actualizarVenta = async () => {
+        
         setEdit(!edit)
-        await editarVenta (nuevaVenta,
+        await editarVenta (cerveza._id, nuevaVenta,
             (response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 toast.success('Venta modificada con éxito');
                 },
                 (error) => {
@@ -121,10 +124,10 @@ const FilaVenta = ({cerveza}) => {
                 console.error(error);
                 }
             );
-        
+        refrescarTabla(!refrescar)
     };
-    const eliminar = () => {
-        eliminarVenta (cerveza._id, 
+    const eliminar = async () => {
+        await eliminarVenta (cerveza._id, 
             (response) => {
                 console.log ("eliminado", response);
                 toast.success('venta eliminada con éxito');
@@ -134,6 +137,7 @@ const FilaVenta = ({cerveza}) => {
                 toast.error('Error eliminando la venta');
                 }
             )
+        refrescarTabla(!refrescar)
     };
     return (
         <>
@@ -166,6 +170,7 @@ const FilaVenta = ({cerveza}) => {
                 <td className = "border-2"> {cerveza.tipoDeCerveza} </td>
                 <td className = "border-2"> {cerveza.marca} </td>
                 <td className = "border-2"> {cerveza.vendedor} </td>
+                <PrivateComponent roleList="Admin" >
                 <td className = "border-2"> 
                     <div className="flex justify-around "> 
                         <Tooltip title= "Edit">
@@ -177,22 +182,23 @@ const FilaVenta = ({cerveza}) => {
                         </Tooltip>
                     </div>
                 </td>
+                </PrivateComponent>
             </tr>
         )}
     </>
 )};
 
-const Tabla = ({listaCervezas}) => {
-    const [busqueda, setBusqueda] = useState("")
+const Tabla = ({refrescarTabla, refrescar, listaCervezas}) => {
+    const {search} = useSearch();
     const [cervezasFiltradas, setCervezasFiltradas] = useState(listaCervezas);
 
     useEffect(() => {
         setCervezasFiltradas(
         listaCervezas.filter((elemento) => {
-            return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+            return JSON.stringify(elemento).toLowerCase().includes(search.toLowerCase());
         })
         );
-    }, [busqueda, listaCervezas]);
+    }, [search, listaCervezas]);
     
 
     return (
@@ -217,13 +223,15 @@ const Tabla = ({listaCervezas}) => {
                         <th className = "border-2 text-left text-xl"> Tipo de Cerveza </th>
                         <th className = "border-2 text-left text-xl"> Marca </th>
                         <th className = "border-2 text-left text-xl"> Vendedor </th>
+                        <PrivateComponent roleList="Admin" >
                         <th className = "border-2 text-left text-xl"> Acciones </th>
+                        </PrivateComponent>
                     </tr>
                 </thead>
                 <tbody >
                     {cervezasFiltradas.map ((cerveza)=>{
                         return (
-                            <FilaVenta cerveza = {cerveza} key= {nanoid()} />
+                            <FilaVenta refrescarTabla = {refrescarTabla} refrescar ={refrescar} cerveza = {cerveza} key= {nanoid()} />
                         );
                     })}
                 </tbody>

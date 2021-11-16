@@ -13,11 +13,13 @@ import Usuarios from "pages/Admin/Usuarios";
 import Prueba from "pages/Prueba";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { userContext } from "context/userContext";
+import { searchContext } from "context/searchContext";
 import { useState } from "react";
 
-
+//window.location.origin
 function App() {
   const [userData, setUserData] = useState({})
+  const [search, setSearch] = useState("")
   return (
     <Auth0Provider 
     domain="cervezas-proyecto.us.auth0.com"
@@ -25,29 +27,36 @@ function App() {
     redirectUri={window.location.origin}
     audience='https://api-cerverceria-autenticacion/' >
       <div>
-        <userContext.Provider value = {{userData, setUserData}}> 
+        <userContext.Provider value = {{userData, setUserData}}>
+          <searchContext.Provider value = {{search, setSearch}} >
             <Router>
               <Switch>
 
-                <Route path= {["/admin/ventas", "/admin/usuarios"]}>
+                <Route path= {["/admin/ventas", "/admin/usuarios", "/admin/prueba"]}>
                   <PrivateLayout>
+
                       <Switch>
                         <Route path = "/admin/ventas">
                         <PrivateRoute roleList={["Admin", "Vendedor"]} >
                           <Ventas/>
                         </PrivateRoute>
                         </Route>
+
                         <Route path ="/admin/usuarios">
                           <PrivateRoute roleList="Admin" >
                             <Usuarios/>
                           </PrivateRoute>
                         </Route>
+                        
+                        <Route path="/admin/prueba">
+                          <Prueba/>
+                        </Route>
+
                       </Switch>
+                      
                   </PrivateLayout>
                 </Route>
-                <Route path="/prueba">
-                      <Prueba/>
-                </Route>
+
                 <Route path= {["/"]}>
                   <PublicLayout>
                     <Route path="/">
@@ -58,6 +67,7 @@ function App() {
                 
               </Switch>
             </Router>
+            </searchContext.Provider>
         </userContext.Provider>
       </div>
     </Auth0Provider>

@@ -15,9 +15,13 @@ const Sidebar = () => {
             <nav className = "hidden md:flex md:w-72 flex-col bg-gray-700 p-4 h-full border border-black"  >
                 <ImageLogo/>
                 <div className='my-4'>
-                    <Ruta icono='fas fa-user' ruta='/admin/perfil' nombre='Profile' usuario = {user} />
+                    <Ruta icono='fas fa-user' ruta='/nothing' nombre='Profile' usuario = {user} />
+                    
+                    <PrivateComponent roleList={["Admin", "Vendedor"]} >
                     <Ruta icono='fas fa-beer' ruta='/admin/missing' nombre='Beer' />
-                    <Ruta icono='fas fa-cash-register' ruta='/admin/cervezas' nombre='Sales' />
+                    <Ruta icono='fas fa-cash-register' ruta='/admin/ventas' nombre='Sales' />
+                    </PrivateComponent>
+
                     <PrivateComponent roleList="Admin" >
                     <Ruta icono='fas fa-users' ruta='/admin/usuarios' nombre='Users' />
                     </PrivateComponent>

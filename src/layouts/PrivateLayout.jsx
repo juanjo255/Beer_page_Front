@@ -7,11 +7,12 @@ import ReactLoading from 'react-loading';
 import { obtenerDatosUsuario } from 'utils/api';
 import { useUser } from 'context/userContext';
 
+
 const PrivateLayout = ({ children }) => {
-    const [busqueda, setBusqueda] = useState("HOLA")
     const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently } = useAuth0();
     const [loadingUserInfo, setLoadingUserInfo] = useState(false);
-    const {setUserData, userData} = useUser();
+    const {setUserData} = useUser();
+    
     useEffect (()=>{
 
         const fetchAuth0Token = async ()=> {
@@ -27,7 +28,6 @@ const PrivateLayout = ({ children }) => {
             //3. enviar al backend
             await obtenerDatosUsuario (
                 (res) => {
-                    res.data.rol = "Admin";
                     setUserData(res.data);
                     setLoadingUserInfo(false);
 
@@ -41,22 +41,24 @@ const PrivateLayout = ({ children }) => {
         }
     },[isAuthenticated, getAccessTokenSilently, setUserData]);
     
-    if (isLoading) {
+    if (isLoading || loadingUserInfo) {
         return (
         <div className = "flex flex-col h-screen justify-center items-center bg-black">
             <ReactLoading type="bubbles" color="yellow" height={200} width={200} />  
         </div>
         );
     }
+    
     if (!isAuthenticated){
         return loginWithRedirect();
     }
+
     return (
             <div className = "flex md:flex-row flex-nowrap w-screen h-screen overflow-hidden" >
                 <Sidebar/>
                 <SidebarResponsive/>
-                <BusquedaLateral setBusqueda={setBusqueda}/>
-                <main className = "w-screen" busqueda={busqueda}>{ children }</main>
+                <BusquedaLateral />
+                <main className = "w-screen">{ children }</main>
             </div>
     )
 }
