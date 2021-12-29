@@ -9,7 +9,7 @@ const getToken = ()=>{
 export const obtenerVentas = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/sales/',
+    url: 'https://beer-back2021.herokuapp.com/sales/',
     headers: { Authorization: getToken()  }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -18,7 +18,7 @@ export const obtenerVentas = async (successCallback, errorCallback) => {
 export const crearVenta = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'http://localhost:5000/sales/',
+    url: 'https://beer-back2021.herokuapp.com/sales/',
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -29,7 +29,7 @@ export const crearVenta = async (data, successCallback, errorCallback) => {
 export const editarVenta = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `http://localhost:5000/sales/${id}/`,
+    url: `https://beer-back2021.herokuapp.com/sales/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -39,7 +39,7 @@ export const editarVenta = async (id, data, successCallback, errorCallback) => {
 export const eliminarVenta = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `http://localhost:5000/sales/${id}/`,
+    url: `https://beer-back2021.herokuapp.com/sales/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -50,7 +50,7 @@ export const eliminarVenta = async (id, successCallback, errorCallback) => {
 export const obtenerUsuarios = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/users/',
+    url: 'https://beer-back2021.herokuapp.com/users/',
     headers: {Authorization: getToken()}
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -59,7 +59,7 @@ export const obtenerUsuarios = async (successCallback, errorCallback) => {
 export const obtenerDatosUsuario = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/users/self',
+    url: 'https://beer-back2021.herokuapp.com/users/self',
     headers: {Authorization: getToken()}
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -68,7 +68,7 @@ export const obtenerDatosUsuario = async (successCallback, errorCallback) => {
 export const editarUsuario = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `http://localhost:5000/users/${id}/`,
+    url: `https://beer-back2021.herokuapp.com/users/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken()},
     data
     };
@@ -80,7 +80,7 @@ export const editarUsuario = async (id, data, successCallback, errorCallback) =>
 export const obtenerMercancia = async (successCallback, errorCallback) => {
     const options = {
     method: 'GET',
-    url: 'http://localhost:5000/ware/',
+    url: 'https://beer-back2021.herokuapp.com/ware/',
     headers: { Authorization: getToken()  }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);
@@ -89,7 +89,7 @@ export const obtenerMercancia = async (successCallback, errorCallback) => {
 export const crearMercancia = async (data, successCallback, errorCallback) => {
     const options = {
     method: 'POST',
-    url: 'http://localhost:5000/ware/',
+    url: 'https://beer-back2021.herokuapp.com/ware/',
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -100,7 +100,7 @@ export const crearMercancia = async (data, successCallback, errorCallback) => {
 export const editarMercancia = async (id, data, successCallback, errorCallback) => {
     const options = {
     method: 'PATCH',
-    url: `http://localhost:5000/ware/${id}/`,
+    url: `https://beer-back2021.herokuapp.com/ware/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() },
     data
     };
@@ -110,7 +110,7 @@ export const editarMercancia = async (id, data, successCallback, errorCallback) 
 export const eliminarMercancia = async (id, successCallback, errorCallback) => {
     const options = {
     method: 'DELETE',
-    url: `http://localhost:5000/ware/${id}/`,
+    url: `https://beer-back2021.herokuapp.com/ware/${id}/`,
     headers: { 'Content-Type': 'application/json', Authorization: getToken() }
     };
     await axios.request(options).then(successCallback).catch(errorCallback);

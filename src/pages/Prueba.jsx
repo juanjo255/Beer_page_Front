@@ -1,6 +1,6 @@
 
 const Prueba = () => {
-    return <div>PAGINA COMUN</div>
+    return <div className="fondo w-full h-full">PAGINA COMUN</div>
 }
 
 export default Prueba;
