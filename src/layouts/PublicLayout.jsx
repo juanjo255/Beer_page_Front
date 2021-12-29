@@ -1,12 +1,10 @@
-import Footer from 'components/Footer'
 import Navbar from 'components/Navbar'
 
 const PublicLayout = ({children}) => {
     return (
-        <div className="flex flex-col justify-between h-screen ">
+        <div className="flex flex-col justify-between h-full">
             <Navbar/>
-            <main className="h-full overflow-y-scroll bg-black " >{children}</main>
-            <Footer/>
+            <main className=" bg-black" >{children}</main>
         </div>
     )
 }
