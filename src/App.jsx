@@ -26,7 +26,7 @@ function App() {
     <Auth0Provider 
     domain="cervezas-proyecto.us.auth0.com"
     clientId="fXXYABSLe5DP278TGnkld6W6A1OyQgQs"
-    redirectUri={window.location.origin}
+    redirectUri='http://localhost:3000/admin/ventas'
     audience='https://api-cerverceria-autenticacion/' >
       <div>
         <userContext.Provider value = {{userData, setUserData}}>
@@ -54,10 +54,6 @@ function App() {
                           <PrivateRoute roleList={["Admin", "Vendedor"]} >
                             <Mercancia/>
                           </PrivateRoute>
-                        </Route>
-
-                        <Route path="/admin/prueba">
-                          <Prueba/>
                         </Route>
 
                       </Switch>
