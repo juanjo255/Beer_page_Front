@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from 'react-router-dom';
+import { useUser } from 'context/userContext';
 
 const Navbar = () => {
 
@@ -15,7 +16,7 @@ const Navbar = () => {
                         {isAuthenticated ? 
                             (<Link to="/admin/prueba"> <button 
                             className= "bg-yellow-300 p-2  px-5 rounded-lg hover:bg-indigo-300 text-black"> 
-                                <i class="fas fa-home"/> Home
+                                <i className="fas fa-home"/> Home
                                 </button></Link>) : (<button onClick={() => loginWithRedirect()} 
                             className= "bg-yellow-300 p-2  rounded-lg hover:bg-indigo-300 text-black">
                                 Sign in </button>)
