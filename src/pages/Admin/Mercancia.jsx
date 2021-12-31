@@ -22,7 +22,6 @@ const Mercancia = () => {
             })
         }
         refrescar()
-        console.log ("refrescar tabla")
     }, [mostrarMercancia, refresh] );
 
     useEffect (() => {
@@ -117,7 +116,6 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
         setEdit(!edit)
         await editarMercancia (cerveza._id, nuevaMercancia,
             (response) => {
-                //console.log(response.data);
                 toast.success('Mercancia modificada con éxito');
                 },
                 (error) => {
