@@ -135,7 +135,7 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                         alert(err)
                     };
         },
-        [cerveza._id, edit, nuevaMercancia],
+        [cerveza._id, edit, nuevaMercancia, refrescar, refrescarTabla],
         )
 
     // para poder modificar el estado con el select
