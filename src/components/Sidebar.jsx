@@ -25,7 +25,7 @@ const Sidebar = () => {
                     <PrivateComponent roleList="Admin" >
                     <Ruta icono='fas fa-users' ruta='/admin/usuarios' nombre='Users' />
                     </PrivateComponent>
-                    <button onClick={() => cerrarSesion()} className="p-1 my-60 text-white flex flex-col w-full items-center bg-red-400 rounded-md">
+                    <button onClick={() => cerrarSesion()} className="p-1 text-white flex flex-col w-full items-center bg-red-400 rounded-md">
                         Log Out
                     </button>
                 </div>

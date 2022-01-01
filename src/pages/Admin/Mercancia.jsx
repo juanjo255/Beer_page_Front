@@ -9,7 +9,7 @@ import { useSearch } from 'context/searchContext';
 
 const Mercancia = () => {
     const [textoBoton, setTextoBoton] = useState("Ingresar nueva venta");
-    const [colorBoton, setColorBoton] = useState("indigo");
+    const [colorBoton, setColorBoton] = useState("bg-indigo-500");
     const [mostrarMercancia, setMostrarMercancia] = useState(true);
     const [refresh, setRefresh] = useState(false);
     const [cervezas, setCervezas] = useState([]);
@@ -31,17 +31,17 @@ const Mercancia = () => {
     useEffect (() => {
         if (mostrarMercancia) {
         setTextoBoton('Ingresar Nueva Mercancia');
-        setColorBoton('indigo');
+        setColorBoton('bg-indigo-500');
         } else {
         setTextoBoton('Mostrar Todas las ventas');
-        setColorBoton('green');
+        setColorBoton('bg-green-500');
         }
     }, [mostrarMercancia]);
 
     return (
         <div className = "flex flex-col h-full overflow-auto" id="sacarTitle" title="MERCANCIA ACTUAL">
             <button onClick={() => {setMostrarMercancia(!mostrarMercancia);}}
-            className={`text-white bg-${colorBoton}-500 p-5 rounded-md w-full`}>
+            className={`text-white ${colorBoton} p-5 rounded-md w-full`}>
                 {textoBoton}
             </button>
             {mostrarMercancia ? (<Tabla listaCervezas = {cervezas} refrescarTabla ={setRefresh} refrescar ={refresh} />) : 
