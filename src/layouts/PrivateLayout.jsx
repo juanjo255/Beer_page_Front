@@ -16,6 +16,8 @@ const PrivateLayout = ({ children }) => {
     useEffect (()=>{
 
         const fetchAuth0Token = async ()=> {
+            
+            try {
             //1. pedir token
             setLoadingUserInfo (true);
             const accessToken = await getAccessTokenSilently({
@@ -30,12 +32,15 @@ const PrivateLayout = ({ children }) => {
                 (res) => {
                     setUserData(res.data);
                     setLoadingUserInfo(false);
-
                 },
                 (error) => {
                     console.log("error obteniendo datos del usuario", error)});
                     setLoadingUserInfo(false);
+
+                }catch(err) {
+                    alert(err)
                 }
+            }
         if (isAuthenticated){
             fetchAuth0Token().catch(err => alert(err.message));
         }

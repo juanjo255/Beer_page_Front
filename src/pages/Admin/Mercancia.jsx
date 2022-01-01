@@ -17,9 +17,13 @@ const Mercancia = () => {
     useEffect (() => {
         // OBTENER CERVAZAS DESDE EL BACKEND
         const refrescar = async () => {
+            try {
             await obtenerMercancia ((response)=>{
                 setCervezas(response.data)
             })
+            }catch(err) {
+                alert(err)
+            }
         }
         refrescar().catch(err => alert(err.message))
     }, [mostrarMercancia, refresh] );
@@ -113,6 +117,7 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
         estado: cerveza.estado
     });
     const actualizarMercancia = async () => {
+        try {
         setEdit(!edit)
         await editarMercancia (cerveza._id, nuevaMercancia,
             (response) => {
@@ -124,6 +129,9 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                 }
             );
         refrescarTabla(!refrescar)
+            }catch(err) {
+                alert(err)
+            }
     };
 
     // para poder modificar el estado con el select
@@ -133,6 +141,7 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
         }
     }, [nuevaMercancia, cerveza.estado]);
     const eliminar = async () => {
+        try {
         await eliminarMercancia (cerveza._id, 
             (response) => {
                 console.log ("eliminado", response);
@@ -144,6 +153,9 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                 }
             )
         refrescarTabla(!refrescar)
+            }catch(err) {
+                alert(err)
+            }
     };
     return (
         <>

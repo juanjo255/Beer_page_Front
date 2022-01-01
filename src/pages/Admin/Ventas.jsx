@@ -17,9 +17,13 @@ const Ventas = () => {
     useEffect (() => {
         // OBTENER CERVAZAS DESDE EL BACKEND
         const refrescar = async () => {
+            try {
             await obtenerVentas ((response)=>{
                 setCervezas(response.data)
             })
+            }catch(err) {
+            alert(err)
+            }
         }
         refrescar().catch(err => alert(err.message))
     }, [mostrarVentas, refresh] );
@@ -111,7 +115,7 @@ const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
         vendedor: cerveza.vendedor
     });
     const actualizarVenta = async () => {
-        
+        try {
         setEdit(!edit)
         await editarVenta (cerveza._id, nuevaVenta,
             (response) => {
@@ -124,8 +128,12 @@ const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
                 }
             );
         refrescarTabla(!refrescar)
+            }catch(err) {
+                alert(err)
+            }
     };
     const eliminar = async () => {
+        try {
         await eliminarVenta (cerveza._id, 
             (response) => {
                 console.log ("eliminado", response);
@@ -137,6 +145,9 @@ const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
                 }
             )
         refrescarTabla(!refrescar)
+            }catch(err) {
+                alert(err)
+            }
     };
     return (
         <>

@@ -10,8 +10,12 @@ const Usuarios = () => {
 
     useEffect(() => {
         const fetchUsuarios = async () => {
+            try{
             await obtenerUsuarios ((respuesta)=>{setUsuarios(respuesta.data)}, 
             (error) => {console.log (error)})
+            }catch(err) {
+                alert(err)
+            }
         }
         fetchUsuarios().catch(err => alert(err.message))
     }, [])
@@ -36,6 +40,7 @@ const FilaUsuarios = ({usuario}) => {
 
     useEffect(() => {
         const actualizarUsuario = async () => {
+            try {
             await editarUsuario (usuario._id, {rol:rol},
                 (response) => {
                     console.log(response.data);
@@ -46,7 +51,9 @@ const FilaUsuarios = ({usuario}) => {
                     console.error(error);
                     }
                 );
-            
+                }catch(err) {
+                    alert(err)
+                }
         };
         
         if (usuario.rol !== rol){
