@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react'
+import React, { useCallback, useEffect, useRef, useState} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
@@ -116,30 +116,34 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
         precioUnitario: cerveza.precioUnitario,
         estado: cerveza.estado
     });
-    const actualizarMercancia = async () => {
-        try {
-        setEdit(!edit)
-        await editarMercancia (cerveza._id, nuevaMercancia,
-            (response) => {
-                toast.success('Mercancia modificada con éxito');
-                },
-                (error) => {
-                toast.error('Error modificando la venta');
-                console.error(error);
-                }
-            );
-        refrescarTabla(!refrescar)
-            }catch(err) {
-                alert(err)
-            }
-    };
+    const actualizarMercancia = useCallback(
+        async () => {
+                try {
+                setEdit(!edit)
+                console.log("merca", nuevaMercancia);
+                await editarMercancia (cerveza._id, nuevaMercancia,
+                    (response) => {
+                        toast.success('Mercancia modificada con éxito');
+                        },
+                        (error) => {
+                        toast.error('Error modificando la venta');
+                        console.error(error);
+                        }
+                    );
+                refrescarTabla(!refrescar)
+                    }catch(err) {
+                        alert(err)
+                    };
+        },
+        [cerveza._id, edit, nuevaMercancia],
+        )
 
     // para poder modificar el estado con el select
     useEffect(() => {
         if (cerveza.estado !== nuevaMercancia.estado){
             actualizarMercancia().catch(err => alert(err.message));
         }
-    }, [nuevaMercancia, cerveza.estado]);
+    }, [nuevaMercancia, cerveza.estado, actualizarMercancia]);
     const eliminar = async () => {
         try {
         await eliminarMercancia (cerveza._id, 
@@ -173,16 +177,20 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                 className ="bg-gray-50 border border-gray-600 p-2 rounded-lg"
                 value = {nuevaMercancia.precioUnitario}
                 onChange = {(e)=>{setNuevaMercancia({...nuevaMercancia, precioUnitario: e.target.value})}}/></td>
-                <td className = "border-2"> <select name="Estado" value={cerveza.estado} 
-                onChange={(e) => {setNuevaMercancia({...nuevaMercancia, estado: e.target.value})}}>
-                    <option value="Disponible">Disponible</option>
-                    <option value="Agotado">Agotado</option>
-                    </select></td>
+                <td className = "border-2"> 
+                    <select name="Estado" value={nuevaMercancia.estado} 
+                        onChange={(e) => {
+                            setNuevaMercancia({...nuevaMercancia, estado: e.target.value});
+                            }}>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Agotado">Agotado</option>
+                    </select>
+                </td>
                 
                 <td className = "border-2"> 
                     <div className="flex justify-around "> 
                         <Tooltip title="Save">
-                        <i  onClick = {()=>{actualizarMercancia(nuevaMercancia)}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
+                        <i  onClick = {()=>{actualizarMercancia()}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
                         </Tooltip>
                         <Tooltip title="Cancel">
                             <i onClick= {()=>{setEdit(!edit)}} className="fas fa-times cursor-pointer transform hover:scale-150" />
@@ -194,11 +202,15 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                 <td className = "border-2"> {cerveza.tipoDeCerveza} </td>
                 <td className = "border-2"> {cerveza.marca} </td>
                 <td className = "border-2"> {cerveza.precioUnitario} </td>
-                <td className = "border-2"> <select name="Estado" value={cerveza.estado} 
-                onChange={(e) => {setNuevaMercancia({...nuevaMercancia, estado: e.target.value})}}>
-                    <option value="Disponible">Disponible</option>
-                    <option value="Agotado">Agotado</option>
-                    </select></td>
+                <td className = "border-2"> 
+                    <select name="Estado" value={nuevaMercancia.estado} 
+                        onChange={(e) => {
+                            setNuevaMercancia({...nuevaMercancia, estado: e.target.value})
+                        }}>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Agotado">Agotado</option>
+                    </select>
+                </td>
 
                 <PrivateComponent roleList="Admin" >
                 <td className = "border-2"> 

@@ -16,7 +16,6 @@ import { userContext } from "context/userContext";
 import { searchContext } from "context/searchContext";
 import { useState } from "react";
 
-
 //window.location.origin
 function App() {
   const [userData, setUserData] = useState({})
