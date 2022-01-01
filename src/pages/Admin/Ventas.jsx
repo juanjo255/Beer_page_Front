@@ -37,6 +37,7 @@ const Ventas = () => {
         setColorBoton('bg-green-500');
         }
     }, [mostrarVentas]);
+    
 
     return (
         <div className = "flex flex-col h-full overflow-auto" id="sacarTitle" title="VENTAS REALIZADAS">
