@@ -24,7 +24,7 @@ function App() {
     <Auth0Provider 
     domain="cervezas-proyecto.us.auth0.com"
     clientId="fXXYABSLe5DP278TGnkld6W6A1OyQgQs"
-    redirectUri='http://localhost:3000/admin/ventas'
+    redirectUri= {`${window.location.origin}/admin/ventas`}
     audience='https://api-cerverceria-autenticacion/' >
       <div>
         <userContext.Provider value = {{userData, setUserData}}>
