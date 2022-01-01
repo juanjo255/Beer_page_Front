@@ -13,7 +13,7 @@ const Usuarios = () => {
             await obtenerUsuarios ((respuesta)=>{setUsuarios(respuesta.data)}, 
             (error) => {console.log (error)})
         }
-        fetchUsuarios()
+        fetchUsuarios().catch(err => alert(err.message))
     }, [])
     return (
         <div className = "flex flex-col h-full overflow-auto ">
@@ -50,7 +50,7 @@ const FilaUsuarios = ({usuario}) => {
         };
         
         if (usuario.rol !== rol){
-            actualizarUsuario()
+            actualizarUsuario().catch(err => alert(err.message))
         }
     }, [rol, usuario])
 

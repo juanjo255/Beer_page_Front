@@ -21,7 +21,7 @@ const Mercancia = () => {
                 setCervezas(response.data)
             })
         }
-        refrescar()
+        refrescar().catch(err => alert(err.message))
     }, [mostrarMercancia, refresh] );
 
     useEffect (() => {
@@ -129,7 +129,7 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
     // para poder modificar el estado con el select
     useEffect(() => {
         if (cerveza.estado !== nuevaMercancia.estado){
-            actualizarMercancia()
+            actualizarMercancia().catch(err => alert(err.message));
         }
     }, [nuevaMercancia, cerveza.estado]);
     const eliminar = async () => {
@@ -196,7 +196,7 @@ const FilaMercancia = ({refrescarTabla, refrescar, cerveza}) => {
                                 className="fas fa-pencil-alt cursor-pointer transform hover:scale-150" />
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <i onClick= {()=>{eliminar()}} className="fas fa-trash cursor-pointer transform hover:scale-150" />
+                            <i onClick= {()=>{eliminar().catch(err => alert(err.message))}} className="fas fa-trash cursor-pointer transform hover:scale-150" />
                         </Tooltip>
                     </div>
                 </td>

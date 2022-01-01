@@ -21,8 +21,7 @@ const Ventas = () => {
                 setCervezas(response.data)
             })
         }
-        refrescar()
-        console.log ("refrescar tabla")
+        refrescar().catch(err => alert(err.message))
     }, [mostrarVentas, refresh] );
 
     useEffect (() => {
@@ -158,7 +157,7 @@ const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
                 <td className = "border-2"> 
                     <div className="flex justify-around "> 
                         <Tooltip title="Save">
-                        <i  onClick = {()=>{actualizarVenta(nuevaVenta)}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
+                        <i  onClick = {()=>{actualizarVenta(nuevaVenta).catch(err => alert(err.message))}} className="fas fa-check cursor-pointer transform hover:scale-150  " />
                         </Tooltip>
                         <Tooltip title="Cancel">
                             <i onClick= {()=>{setEdit(!edit)}} className="fas fa-times cursor-pointer transform hover:scale-150" />
@@ -178,7 +177,7 @@ const FilaVenta = ({refrescarTabla, refrescar, cerveza}) => {
                                 className="fas fa-pencil-alt cursor-pointer transform hover:scale-150" />
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <i onClick= {()=>{eliminar()}} className="fas fa-trash cursor-pointer transform hover:scale-150" />
+                            <i onClick= {()=>{eliminar().catch(err => alert(err.message))}} className="fas fa-trash cursor-pointer transform hover:scale-150" />
                         </Tooltip>
                     </div>
                 </td>

@@ -37,7 +37,7 @@ const PrivateLayout = ({ children }) => {
                     setLoadingUserInfo(false);
                 }
         if (isAuthenticated){
-            fetchAuth0Token();
+            fetchAuth0Token().catch(err => alert(err.message));
         }
     },[isAuthenticated, getAccessTokenSilently, setUserData]);
     
